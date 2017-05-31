@@ -19,6 +19,7 @@ The goals / steps of this project are the following:
 [image5]: ./test_images_output/test5.jpg "Lines"
 [image6]: ./test_images_output/test6.jpg "Masked_Lines"
 [image7]: ./test_images_output/test7.jpg "Result"
+[video1]: ./test_videos_output/solidWhiteRight.mp4 "Video1"
 
 ---
 
@@ -58,6 +59,7 @@ The reason to mask the image after the line is drawn is that in this way, our pi
 
 * Overlay the Detected Lane with the Original Image
 ![alt text][image7]
+
 
 ### 2. Identify potential shortcomings with your current pipeline
 There are some shortcoming in this pipeline.  
