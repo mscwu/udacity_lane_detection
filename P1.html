@@ -13682,7 +13682,7 @@ AElFTkSuQmCC
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
@@ -13698,7 +13698,7 @@ AElFTkSuQmCC
 
 
 <div class="output_area">
-<div class="prompt output_prompt">Out[4]:</div>
+<div class="prompt output_prompt">Out[5]:</div>
 
 
 
@@ -13748,22 +13748,22 @@ AElFTkSuQmCC
     <span class="c1"># define some parameters</span>
     
     <span class="c1"># gaussian blur</span>
-    <span class="n">kernel_size</span> <span class="o">=</span> <span class="mi">5</span> 
+    <span class="n">kernel_size</span> <span class="o">=</span> <span class="mi">3</span> 
     
     <span class="c1"># canny edge detection</span>
-    <span class="n">low_threshold</span> <span class="o">=</span> <span class="mi">50</span> 
+    <span class="n">low_threshold</span> <span class="o">=</span> <span class="mi">45</span> 
     <span class="n">high_threshold</span> <span class="o">=</span> <span class="mi">155</span>
     
     <span class="c1"># hough transform</span>
-    <span class="n">rho</span> <span class="o">=</span> <span class="mi">2</span>
-    <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">180</span>
+    <span class="n">rho</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">90</span>
     <span class="n">threshold</span> <span class="o">=</span> <span class="mi">15</span>
     <span class="n">min_line_length</span> <span class="o">=</span> <span class="mi">10</span>
     <span class="n">max_line_gap</span> <span class="o">=</span> <span class="mi">8</span>
     
     <span class="c1"># vertices defining region of interest</span>
     <span class="n">imshape</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span>
-    <span class="n">vertices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[(</span><span class="mi">130</span><span class="p">,</span><span class="n">imshape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),(</span><span class="mi">410</span><span class="p">,</span> <span class="mi">340</span><span class="p">),</span> <span class="p">(</span><span class="mi">590</span><span class="p">,</span> <span class="mi">340</span><span class="p">),</span> <span class="p">(</span><span class="mi">900</span><span class="p">,</span><span class="n">imshape</span><span class="p">[</span><span class="mi">0</span><span class="p">])]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+    <span class="n">vertices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[(</span><span class="mi">130</span><span class="p">,</span><span class="n">imshape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),(</span><span class="mi">415</span><span class="p">,</span> <span class="mi">330</span><span class="p">),</span> <span class="p">(</span><span class="mi">595</span><span class="p">,</span> <span class="mi">330</span><span class="p">),</span> <span class="p">(</span><span class="mi">900</span><span class="p">,</span><span class="n">imshape</span><span class="p">[</span><span class="mi">0</span><span class="p">])]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
     
     <span class="c1"># start lane detection</span>
     
@@ -13783,12 +13783,43 @@ AElFTkSuQmCC
     <span class="n">lines</span> <span class="o">=</span> <span class="n">hough_lines</span><span class="p">(</span><span class="n">masked_edges</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">threshold</span><span class="p">,</span> <span class="n">min_line_length</span><span class="p">,</span> <span class="n">max_line_gap</span><span class="p">)</span>
      
     <span class="c1"># mask the lines again</span>
-    <span class="n">masked_lines</span> <span class="o">=</span> <span class="n">region_of_interest</span><span class="p">(</span><span class="n">lines</span><span class="p">,</span> <span class="n">vertices</span><span class="p">)</span>
+    <span class="n">vertices_line_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[(</span><span class="mi">0</span><span class="p">,</span><span class="n">imshape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">330</span><span class="p">),</span> <span class="p">(</span><span class="n">imshape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">330</span><span class="p">),</span> <span class="p">(</span><span class="n">imshape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">imshape</span><span class="p">[</span><span class="mi">0</span><span class="p">])]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+    <span class="n">masked_lines</span> <span class="o">=</span> <span class="n">region_of_interest</span><span class="p">(</span><span class="n">lines</span><span class="p">,</span> <span class="n">vertices_line_mask</span><span class="p">)</span>
     
     <span class="c1"># draw lines on original image</span>
     <span class="n">results</span> <span class="o">=</span> <span class="n">weighted_img</span><span class="p">(</span><span class="n">masked_lines</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">α</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">β</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span> <span class="n">λ</span><span class="o">=</span><span class="mf">0.</span><span class="p">)</span>
     
     <span class="k">return</span> <span class="n">results</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># generate files for write up, this is not part of the pipeline</span>
+<span class="n">gray_img</span> <span class="o">=</span> <span class="n">grayscale</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+<span class="n">mpimg</span><span class="o">.</span><span class="n">imsave</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;test_images_output/&#39;</span><span class="p">,</span><span class="s1">&#39;test1.jpg&#39;</span><span class="p">),</span> <span class="n">gray_img</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">blur_gray_img</span> <span class="o">=</span> <span class="n">gaussian_blur</span><span class="p">(</span><span class="n">gray_img</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">mpimg</span><span class="o">.</span><span class="n">imsave</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;test_images_output/&#39;</span><span class="p">,</span><span class="s1">&#39;test2.jpg&#39;</span><span class="p">),</span> <span class="n">blur_gray_img</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">edges</span> <span class="o">=</span> <span class="n">canny</span><span class="p">(</span><span class="n">blur_gray_img</span><span class="p">,</span><span class="mi">45</span><span class="p">,</span><span class="mi">155</span><span class="p">)</span>
+<span class="n">imshape</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span>
+<span class="n">mpimg</span><span class="o">.</span><span class="n">imsave</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;test_images_output/&#39;</span><span class="p">,</span><span class="s1">&#39;test3.jpg&#39;</span><span class="p">),</span> <span class="n">edges</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">vertices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[(</span><span class="mi">130</span><span class="p">,</span><span class="n">imshape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),(</span><span class="mi">415</span><span class="p">,</span> <span class="mi">330</span><span class="p">),</span> <span class="p">(</span><span class="mi">595</span><span class="p">,</span> <span class="mi">330</span><span class="p">),</span> <span class="p">(</span><span class="mi">900</span><span class="p">,</span><span class="n">imshape</span><span class="p">[</span><span class="mi">0</span><span class="p">])]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+<span class="n">masked_edges</span> <span class="o">=</span> <span class="n">region_of_interest</span><span class="p">(</span><span class="n">edges</span><span class="p">,</span> <span class="n">vertices</span><span class="p">)</span>
+<span class="n">mpimg</span><span class="o">.</span><span class="n">imsave</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;test_images_output/&#39;</span><span class="p">,</span><span class="s1">&#39;test4.jpg&#39;</span><span class="p">),</span> <span class="n">masked_edges</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">lines</span> <span class="o">=</span> <span class="n">hough_lines</span><span class="p">(</span><span class="n">masked_edges</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">90</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+<span class="n">mpimg</span><span class="o">.</span><span class="n">imsave</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;test_images_output/&#39;</span><span class="p">,</span><span class="s1">&#39;test5.jpg&#39;</span><span class="p">),</span> <span class="n">lines</span><span class="p">)</span>
+<span class="n">vertices_line_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[(</span><span class="mi">0</span><span class="p">,</span><span class="n">imshape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">330</span><span class="p">),</span> <span class="p">(</span><span class="n">imshape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">330</span><span class="p">),</span> <span class="p">(</span><span class="n">imshape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">imshape</span><span class="p">[</span><span class="mi">0</span><span class="p">])]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+<span class="n">masked_lines</span> <span class="o">=</span> <span class="n">region_of_interest</span><span class="p">(</span><span class="n">lines</span><span class="p">,</span> <span class="n">vertices_line_mask</span><span class="p">)</span>
+<span class="n">mpimg</span><span class="o">.</span><span class="n">imsave</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;test_images_output/&#39;</span><span class="p">,</span><span class="s1">&#39;test6.jpg&#39;</span><span class="p">),</span> <span class="n">masked_lines</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">weighted_img</span><span class="p">(</span><span class="n">masked_lines</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">α</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">β</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span> <span class="n">λ</span><span class="o">=</span><span class="mf">0.</span><span class="p">)</span>
+<span class="n">mpimg</span><span class="o">.</span><span class="n">imsave</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;test_images_output/&#39;</span><span class="p">,</span><span class="s1">&#39;test7.jpg&#39;</span><span class="p">),</span> <span class="n">results</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -13919,7 +13950,7 @@ imageio.plugins.ffmpeg.download()</code></pre>
 <div class="prompt"></div>
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>100%|███████████████████████████████████████████████████████████████████████████████▋| 221/222 [00:03&lt;00:00, 73.34it/s]
+<pre>100%|███████████████████████████████████████████████████████████████████████████████▋| 221/222 [00:03&lt;00:00, 66.73it/s]
 </pre>
 </div>
 </div>
@@ -13931,7 +13962,7 @@ imageio.plugins.ffmpeg.download()</code></pre>
 <pre>[MoviePy] Done.
 [MoviePy] &gt;&gt;&gt;&gt; Video ready: test_videos_output/solidWhiteRight.mp4 
 
-Wall time: 3.47 s
+Wall time: 3.74 s
 </pre>
 </div>
 </div>
@@ -14047,7 +14078,7 @@ Wall time: 3.47 s
 <div class="prompt"></div>
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>100%|███████████████████████████████████████████████████████████████████████████████▉| 681/682 [00:09&lt;00:00, 70.21it/s]
+<pre>100%|███████████████████████████████████████████████████████████████████████████████▉| 681/682 [00:10&lt;00:00, 66.65it/s]
 </pre>
 </div>
 </div>
@@ -14059,7 +14090,7 @@ Wall time: 3.47 s
 <pre>[MoviePy] Done.
 [MoviePy] &gt;&gt;&gt;&gt; Video ready: test_videos_output/solidYellowLeft.mp4 
 
-Wall time: 10.1 s
+Wall time: 10.6 s
 </pre>
 </div>
 </div>
@@ -14128,7 +14159,7 @@ Wall time: 10.1 s
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">challenge_output</span> <span class="o">=</span> <span class="s1">&#39;test_videos_output/challenge.mp4&#39;</span>
@@ -14143,201 +14174,6 @@ Wall time: 10.1 s
 </pre></div>
 
 </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-<div class="prompt"></div>
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[MoviePy] &gt;&gt;&gt;&gt; Building video test_videos_output/challenge.mp4
-[MoviePy] Writing video test_videos_output/challenge.mp4
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-<div class="prompt"></div>
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre> 61%|████████████████████████████████████████████████▊                               | 153/251 [00:04&lt;00:03, 31.48it/s]</pre>
-</div>
-</div>
-
-<div class="output_area">
-<div class="prompt"></div>
-
-<div class="output_subarea output_text output_error">
-<pre>
-<span class="ansi-red-intense-fg ansi-bold">---------------------------------------------------------------------------</span>
-<span class="ansi-red-intense-fg ansi-bold">IndexError</span>                                Traceback (most recent call last)
-<span class="ansi-green-intense-fg ansi-bold">&lt;timed eval&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-intense-fg ansi-bold">()</span>
-
-<span class="ansi-green-intense-fg ansi-bold">&lt;decorator-gen-174&gt;</span> in <span class="ansi-cyan-fg">write_videofile</span><span class="ansi-blue-intense-fg ansi-bold">(self, filename, fps, codec, bitrate, audio, audio_fps, preset, audio_nbytes, audio_codec, audio_bitrate, audio_bufsize, temp_audiofile, rewrite_audio, remove_temp, write_logfile, verbose, threads, ffmpeg_params, progress_bar)</span>
-
-<span class="ansi-green-intense-fg ansi-bold">C:\Users\mscwu\Miniconda3\envs\carnd-term1\lib\site-packages\moviepy\decorators.py</span> in <span class="ansi-cyan-fg">requires_duration</span><span class="ansi-blue-intense-fg ansi-bold">(f, clip, *a, **k)</span>
-<span class="ansi-green-fg">     52</span>         <span class="ansi-green-intense-fg ansi-bold">raise</span> ValueError<span class="ansi-yellow-intense-fg ansi-bold">(</span><span class="ansi-blue-intense-fg ansi-bold">&#34;Attribute &#39;duration&#39; not set&#34;</span><span class="ansi-yellow-intense-fg ansi-bold">)</span>
-<span class="ansi-green-fg">     53</span>     <span class="ansi-green-intense-fg ansi-bold">else</span><span class="ansi-yellow-intense-fg ansi-bold">:</span>
-<span class="ansi-green-intense-fg ansi-bold">---&gt; 54</span><span class="ansi-yellow-intense-fg ansi-bold">         </span><span class="ansi-green-intense-fg ansi-bold">return</span> f<span class="ansi-yellow-intense-fg ansi-bold">(</span>clip<span class="ansi-yellow-intense-fg ansi-bold">,</span> <span class="ansi-yellow-intense-fg ansi-bold">*</span>a<span class="ansi-yellow-intense-fg ansi-bold">,</span> <span class="ansi-yellow-intense-fg ansi-bold">**</span>k<span class="ansi-yellow-intense-fg ansi-bold">)</span>
-<span class="ansi-green-fg">     55</span> 
-<span class="ansi-green-fg">     56</span> 
-
-<span class="ansi-green-intense-fg ansi-bold">&lt;decorator-gen-173&gt;</span> in <span class="ansi-cyan-fg">write_videofile</span><span class="ansi-blue-intense-fg ansi-bold">(self, filename, fps, codec, bitrate, audio, audio_fps, preset, audio_nbytes, audio_codec, audio_bitrate, audio_bufsize, temp_audiofile, rewrite_audio, remove_temp, write_logfile, verbose, threads, ffmpeg_params, progress_bar)</span>
-
-<span class="ansi-green-intense-fg ansi-bold">C:\Users\mscwu\Miniconda3\envs\carnd-term1\lib\site-packages\moviepy\decorators.py</span> in <span class="ansi-cyan-fg">use_clip_fps_by_default</span><span class="ansi-blue-intense-fg ansi-bold">(f, clip, *a, **k)</span>
-<span class="ansi-green-fg">    135</span>              for (k,v) in k.items()}
-<span class="ansi-green-fg">    136</span> 
-<span class="ansi-green-intense-fg ansi-bold">--&gt; 137</span><span class="ansi-yellow-intense-fg ansi-bold">     </span><span class="ansi-green-intense-fg ansi-bold">return</span> f<span class="ansi-yellow-intense-fg ansi-bold">(</span>clip<span class="ansi-yellow-intense-fg ansi-bold">,</span> <span class="ansi-yellow-intense-fg ansi-bold">*</span>new_a<span class="ansi-yellow-intense-fg ansi-bold">,</span> <span class="ansi-yellow-intense-fg ansi-bold">**</span>new_kw<span class="ansi-yellow-intense-fg ansi-bold">)</span>
-
-<span class="ansi-green-intense-fg ansi-bold">&lt;decorator-gen-172&gt;</span> in <span class="ansi-cyan-fg">write_videofile</span><span class="ansi-blue-intense-fg ansi-bold">(self, filename, fps, codec, bitrate, audio, audio_fps, preset, audio_nbytes, audio_codec, audio_bitrate, audio_bufsize, temp_audiofile, rewrite_audio, remove_temp, write_logfile, verbose, threads, ffmpeg_params, progress_bar)</span>
-
-<span class="ansi-green-intense-fg ansi-bold">C:\Users\mscwu\Miniconda3\envs\carnd-term1\lib\site-packages\moviepy\decorators.py</span> in <span class="ansi-cyan-fg">convert_masks_to_RGB</span><span class="ansi-blue-intense-fg ansi-bold">(f, clip, *a, **k)</span>
-<span class="ansi-green-fg">     20</span>     <span class="ansi-green-intense-fg ansi-bold">if</span> clip<span class="ansi-yellow-intense-fg ansi-bold">.</span>ismask<span class="ansi-yellow-intense-fg ansi-bold">:</span>
-<span class="ansi-green-fg">     21</span>         clip <span class="ansi-yellow-intense-fg ansi-bold">=</span> clip<span class="ansi-yellow-intense-fg ansi-bold">.</span>to_RGB<span class="ansi-yellow-intense-fg ansi-bold">(</span><span class="ansi-yellow-intense-fg ansi-bold">)</span>
-<span class="ansi-green-intense-fg ansi-bold">---&gt; 22</span><span class="ansi-yellow-intense-fg ansi-bold">     </span><span class="ansi-green-intense-fg ansi-bold">return</span> f<span class="ansi-yellow-intense-fg ansi-bold">(</span>clip<span class="ansi-yellow-intense-fg ansi-bold">,</span> <span class="ansi-yellow-intense-fg ansi-bold">*</span>a<span class="ansi-yellow-intense-fg ansi-bold">,</span> <span class="ansi-yellow-intense-fg ansi-bold">**</span>k<span class="ansi-yellow-intense-fg ansi-bold">)</span>
-<span class="ansi-green-fg">     23</span> 
-<span class="ansi-green-fg">     24</span> <span class="ansi-yellow-intense-fg ansi-bold">@</span>decorator<span class="ansi-yellow-intense-fg ansi-bold">.</span>decorator
-
-<span class="ansi-green-intense-fg ansi-bold">C:\Users\mscwu\Miniconda3\envs\carnd-term1\lib\site-packages\moviepy\video\VideoClip.py</span> in <span class="ansi-cyan-fg">write_videofile</span><span class="ansi-blue-intense-fg ansi-bold">(self, filename, fps, codec, bitrate, audio, audio_fps, preset, audio_nbytes, audio_codec, audio_bitrate, audio_bufsize, temp_audiofile, rewrite_audio, remove_temp, write_logfile, verbose, threads, ffmpeg_params, progress_bar)</span>
-<span class="ansi-green-fg">    347</span>                            verbose<span class="ansi-yellow-intense-fg ansi-bold">=</span>verbose<span class="ansi-yellow-intense-fg ansi-bold">,</span> threads<span class="ansi-yellow-intense-fg ansi-bold">=</span>threads<span class="ansi-yellow-intense-fg ansi-bold">,</span>
-<span class="ansi-green-fg">    348</span>                            ffmpeg_params<span class="ansi-yellow-intense-fg ansi-bold">=</span>ffmpeg_params<span class="ansi-yellow-intense-fg ansi-bold">,</span>
-<span class="ansi-green-intense-fg ansi-bold">--&gt; 349</span><span class="ansi-yellow-intense-fg ansi-bold">                            progress_bar=progress_bar)
-</span><span class="ansi-green-fg">    350</span> 
-<span class="ansi-green-fg">    351</span>         <span class="ansi-green-intense-fg ansi-bold">if</span> remove_temp <span class="ansi-green-intense-fg ansi-bold">and</span> make_audio<span class="ansi-yellow-intense-fg ansi-bold">:</span>
-
-<span class="ansi-green-intense-fg ansi-bold">C:\Users\mscwu\Miniconda3\envs\carnd-term1\lib\site-packages\moviepy\video\io\ffmpeg_writer.py</span> in <span class="ansi-cyan-fg">ffmpeg_write_video</span><span class="ansi-blue-intense-fg ansi-bold">(clip, filename, fps, codec, bitrate, preset, withmask, write_logfile, audiofile, verbose, threads, ffmpeg_params, progress_bar)</span>
-<span class="ansi-green-fg">    207</span> 
-<span class="ansi-green-fg">    208</span>     for t,frame in clip.iter_frames(progress_bar=progress_bar, with_times=True,
-<span class="ansi-green-intense-fg ansi-bold">--&gt; 209</span><span class="ansi-yellow-intense-fg ansi-bold">                                     fps=fps, dtype=&#34;uint8&#34;):
-</span><span class="ansi-green-fg">    210</span>         <span class="ansi-green-intense-fg ansi-bold">if</span> withmask<span class="ansi-yellow-intense-fg ansi-bold">:</span>
-<span class="ansi-green-fg">    211</span>             mask <span class="ansi-yellow-intense-fg ansi-bold">=</span> <span class="ansi-yellow-intense-fg ansi-bold">(</span><span class="ansi-cyan-intense-fg ansi-bold">255</span><span class="ansi-yellow-intense-fg ansi-bold">*</span>clip<span class="ansi-yellow-intense-fg ansi-bold">.</span>mask<span class="ansi-yellow-intense-fg ansi-bold">.</span>get_frame<span class="ansi-yellow-intense-fg ansi-bold">(</span>t<span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">)</span>
-
-<span class="ansi-green-intense-fg ansi-bold">C:\Users\mscwu\Miniconda3\envs\carnd-term1\lib\site-packages\tqdm\_tqdm.py</span> in <span class="ansi-cyan-fg">__iter__</span><span class="ansi-blue-intense-fg ansi-bold">(self)</span>
-<span class="ansi-green-fg">    831</span> &#34;&#34;&#34;, fp_write=getattr(self.fp, &#39;write&#39;, sys.stderr.write))
-<span class="ansi-green-fg">    832</span> 
-<span class="ansi-green-intense-fg ansi-bold">--&gt; 833</span><span class="ansi-yellow-intense-fg ansi-bold">             </span><span class="ansi-green-intense-fg ansi-bold">for</span> obj <span class="ansi-green-intense-fg ansi-bold">in</span> iterable<span class="ansi-yellow-intense-fg ansi-bold">:</span>
-<span class="ansi-green-fg">    834</span>                 <span class="ansi-green-intense-fg ansi-bold">yield</span> obj
-<span class="ansi-green-fg">    835</span>                 <span class="ansi-red-intense-fg ansi-bold"># Update and print the progressbar.</span>
-
-<span class="ansi-green-intense-fg ansi-bold">C:\Users\mscwu\Miniconda3\envs\carnd-term1\lib\site-packages\moviepy\Clip.py</span> in <span class="ansi-cyan-fg">generator</span><span class="ansi-blue-intense-fg ansi-bold">()</span>
-<span class="ansi-green-fg">    473</span>         <span class="ansi-green-intense-fg ansi-bold">def</span> generator<span class="ansi-yellow-intense-fg ansi-bold">(</span><span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">:</span>
-<span class="ansi-green-fg">    474</span>             <span class="ansi-green-intense-fg ansi-bold">for</span> t <span class="ansi-green-intense-fg ansi-bold">in</span> np<span class="ansi-yellow-intense-fg ansi-bold">.</span>arange<span class="ansi-yellow-intense-fg ansi-bold">(</span><span class="ansi-cyan-intense-fg ansi-bold">0</span><span class="ansi-yellow-intense-fg ansi-bold">,</span> self<span class="ansi-yellow-intense-fg ansi-bold">.</span>duration<span class="ansi-yellow-intense-fg ansi-bold">,</span> <span class="ansi-cyan-intense-fg ansi-bold">1.0</span><span class="ansi-yellow-intense-fg ansi-bold">/</span>fps<span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">:</span>
-<span class="ansi-green-intense-fg ansi-bold">--&gt; 475</span><span class="ansi-yellow-intense-fg ansi-bold">                 </span>frame <span class="ansi-yellow-intense-fg ansi-bold">=</span> self<span class="ansi-yellow-intense-fg ansi-bold">.</span>get_frame<span class="ansi-yellow-intense-fg ansi-bold">(</span>t<span class="ansi-yellow-intense-fg ansi-bold">)</span>
-<span class="ansi-green-fg">    476</span>                 <span class="ansi-green-intense-fg ansi-bold">if</span> <span class="ansi-yellow-intense-fg ansi-bold">(</span>dtype <span class="ansi-green-intense-fg ansi-bold">is</span> <span class="ansi-green-intense-fg ansi-bold">not</span> <span class="ansi-green-intense-fg ansi-bold">None</span><span class="ansi-yellow-intense-fg ansi-bold">)</span> <span class="ansi-green-intense-fg ansi-bold">and</span> <span class="ansi-yellow-intense-fg ansi-bold">(</span>frame<span class="ansi-yellow-intense-fg ansi-bold">.</span>dtype <span class="ansi-yellow-intense-fg ansi-bold">!=</span> dtype<span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">:</span>
-<span class="ansi-green-fg">    477</span>                     frame <span class="ansi-yellow-intense-fg ansi-bold">=</span> frame<span class="ansi-yellow-intense-fg ansi-bold">.</span>astype<span class="ansi-yellow-intense-fg ansi-bold">(</span>dtype<span class="ansi-yellow-intense-fg ansi-bold">)</span>
-
-<span class="ansi-green-intense-fg ansi-bold">&lt;decorator-gen-137&gt;</span> in <span class="ansi-cyan-fg">get_frame</span><span class="ansi-blue-intense-fg ansi-bold">(self, t)</span>
-
-<span class="ansi-green-intense-fg ansi-bold">C:\Users\mscwu\Miniconda3\envs\carnd-term1\lib\site-packages\moviepy\decorators.py</span> in <span class="ansi-cyan-fg">wrapper</span><span class="ansi-blue-intense-fg ansi-bold">(f, *a, **kw)</span>
-<span class="ansi-green-fg">     87</span>         new_kw = {k: fun(v) if k in varnames else v
-<span class="ansi-green-fg">     88</span>                  for (k,v) in kw.items()}
-<span class="ansi-green-intense-fg ansi-bold">---&gt; 89</span><span class="ansi-yellow-intense-fg ansi-bold">         </span><span class="ansi-green-intense-fg ansi-bold">return</span> f<span class="ansi-yellow-intense-fg ansi-bold">(</span><span class="ansi-yellow-intense-fg ansi-bold">*</span>new_a<span class="ansi-yellow-intense-fg ansi-bold">,</span> <span class="ansi-yellow-intense-fg ansi-bold">**</span>new_kw<span class="ansi-yellow-intense-fg ansi-bold">)</span>
-<span class="ansi-green-fg">     90</span>     <span class="ansi-green-intense-fg ansi-bold">return</span> decorator<span class="ansi-yellow-intense-fg ansi-bold">.</span>decorator<span class="ansi-yellow-intense-fg ansi-bold">(</span>wrapper<span class="ansi-yellow-intense-fg ansi-bold">)</span>
-<span class="ansi-green-fg">     91</span> 
-
-<span class="ansi-green-intense-fg ansi-bold">C:\Users\mscwu\Miniconda3\envs\carnd-term1\lib\site-packages\moviepy\Clip.py</span> in <span class="ansi-cyan-fg">get_frame</span><span class="ansi-blue-intense-fg ansi-bold">(self, t)</span>
-<span class="ansi-green-fg">     93</span>                 <span class="ansi-green-intense-fg ansi-bold">return</span> frame
-<span class="ansi-green-fg">     94</span>         <span class="ansi-green-intense-fg ansi-bold">else</span><span class="ansi-yellow-intense-fg ansi-bold">:</span>
-<span class="ansi-green-intense-fg ansi-bold">---&gt; 95</span><span class="ansi-yellow-intense-fg ansi-bold">             </span><span class="ansi-green-intense-fg ansi-bold">return</span> self<span class="ansi-yellow-intense-fg ansi-bold">.</span>make_frame<span class="ansi-yellow-intense-fg ansi-bold">(</span>t<span class="ansi-yellow-intense-fg ansi-bold">)</span>
-<span class="ansi-green-fg">     96</span> 
-<span class="ansi-green-fg">     97</span>     <span class="ansi-green-intense-fg ansi-bold">def</span> fl<span class="ansi-yellow-intense-fg ansi-bold">(</span>self<span class="ansi-yellow-intense-fg ansi-bold">,</span> fun<span class="ansi-yellow-intense-fg ansi-bold">,</span> apply_to<span class="ansi-yellow-intense-fg ansi-bold">=</span><span class="ansi-yellow-intense-fg ansi-bold">[</span><span class="ansi-yellow-intense-fg ansi-bold">]</span><span class="ansi-yellow-intense-fg ansi-bold">,</span> keep_duration<span class="ansi-yellow-intense-fg ansi-bold">=</span><span class="ansi-green-intense-fg ansi-bold">True</span><span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">:</span>
-
-<span class="ansi-green-intense-fg ansi-bold">C:\Users\mscwu\Miniconda3\envs\carnd-term1\lib\site-packages\moviepy\Clip.py</span> in <span class="ansi-cyan-fg">&lt;lambda&gt;</span><span class="ansi-blue-intense-fg ansi-bold">(t)</span>
-<span class="ansi-green-fg">    134</span> 
-<span class="ansi-green-fg">    135</span>         <span class="ansi-red-intense-fg ansi-bold">#mf = copy(self.make_frame)</span>
-<span class="ansi-green-intense-fg ansi-bold">--&gt; 136</span><span class="ansi-yellow-intense-fg ansi-bold">         </span>newclip <span class="ansi-yellow-intense-fg ansi-bold">=</span> self<span class="ansi-yellow-intense-fg ansi-bold">.</span>set_make_frame<span class="ansi-yellow-intense-fg ansi-bold">(</span><span class="ansi-green-intense-fg ansi-bold">lambda</span> t<span class="ansi-yellow-intense-fg ansi-bold">:</span> fun<span class="ansi-yellow-intense-fg ansi-bold">(</span>self<span class="ansi-yellow-intense-fg ansi-bold">.</span>get_frame<span class="ansi-yellow-intense-fg ansi-bold">,</span> t<span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">)</span>
-<span class="ansi-green-fg">    137</span> 
-<span class="ansi-green-fg">    138</span>         <span class="ansi-green-intense-fg ansi-bold">if</span> <span class="ansi-green-intense-fg ansi-bold">not</span> keep_duration<span class="ansi-yellow-intense-fg ansi-bold">:</span>
-
-<span class="ansi-green-intense-fg ansi-bold">C:\Users\mscwu\Miniconda3\envs\carnd-term1\lib\site-packages\moviepy\video\VideoClip.py</span> in <span class="ansi-cyan-fg">&lt;lambda&gt;</span><span class="ansi-blue-intense-fg ansi-bold">(gf, t)</span>
-<span class="ansi-green-fg">    531</span>         <span class="ansi-red-fg">`</span>get_frame<span class="ansi-yellow-intense-fg ansi-bold">(</span>t<span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-red-fg">`</span> by another frame<span class="ansi-yellow-intense-fg ansi-bold">,</span><span class="ansi-red-fg"> </span><span class="ansi-red-fg"> </span><span class="ansi-red-fg">`</span>image_func<span class="ansi-yellow-intense-fg ansi-bold">(</span>get_frame<span class="ansi-yellow-intense-fg ansi-bold">(</span>t<span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-red-fg">`</span>
-<span class="ansi-green-fg">    532</span>         &#34;&#34;&#34;
-<span class="ansi-green-intense-fg ansi-bold">--&gt; 533</span><span class="ansi-yellow-intense-fg ansi-bold">         </span><span class="ansi-green-intense-fg ansi-bold">return</span> self<span class="ansi-yellow-intense-fg ansi-bold">.</span>fl<span class="ansi-yellow-intense-fg ansi-bold">(</span><span class="ansi-green-intense-fg ansi-bold">lambda</span> gf<span class="ansi-yellow-intense-fg ansi-bold">,</span> t<span class="ansi-yellow-intense-fg ansi-bold">:</span> image_func<span class="ansi-yellow-intense-fg ansi-bold">(</span>gf<span class="ansi-yellow-intense-fg ansi-bold">(</span>t<span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">,</span> apply_to<span class="ansi-yellow-intense-fg ansi-bold">)</span>
-<span class="ansi-green-fg">    534</span> 
-<span class="ansi-green-fg">    535</span>     <span class="ansi-red-intense-fg ansi-bold"># --------------------------------------------------------------</span>
-
-<span class="ansi-green-intense-fg ansi-bold">&lt;ipython-input-8-ca1b577b3520&gt;</span> in <span class="ansi-cyan-fg">process_image</span><span class="ansi-blue-intense-fg ansi-bold">(image)</span>
-<span class="ansi-green-fg">      3</span>     <span class="ansi-red-intense-fg ansi-bold"># TODO: put your pipeline here,</span>
-<span class="ansi-green-fg">      4</span>     <span class="ansi-red-intense-fg ansi-bold"># you should return the final output (image where lines are drawn on lanes)</span>
-<span class="ansi-green-intense-fg ansi-bold">----&gt; 5</span><span class="ansi-yellow-intense-fg ansi-bold">     </span>result <span class="ansi-yellow-intense-fg ansi-bold">=</span> lane_detection<span class="ansi-yellow-intense-fg ansi-bold">(</span>image<span class="ansi-yellow-intense-fg ansi-bold">)</span>
-<span class="ansi-green-fg">      6</span> 
-<span class="ansi-green-fg">      7</span>     <span class="ansi-green-intense-fg ansi-bold">return</span> result
-
-<span class="ansi-green-intense-fg ansi-bold">&lt;ipython-input-5-1762733025b1&gt;</span> in <span class="ansi-cyan-fg">lane_detection</span><span class="ansi-blue-intense-fg ansi-bold">(img)</span>
-<span class="ansi-green-fg">     37</span> 
-<span class="ansi-green-fg">     38</span>     <span class="ansi-red-intense-fg ansi-bold"># detect and draw lines from hough transform</span>
-<span class="ansi-green-intense-fg ansi-bold">---&gt; 39</span><span class="ansi-yellow-intense-fg ansi-bold">     </span>lines <span class="ansi-yellow-intense-fg ansi-bold">=</span> hough_lines<span class="ansi-yellow-intense-fg ansi-bold">(</span>masked_edges<span class="ansi-yellow-intense-fg ansi-bold">,</span> rho<span class="ansi-yellow-intense-fg ansi-bold">,</span> theta<span class="ansi-yellow-intense-fg ansi-bold">,</span> threshold<span class="ansi-yellow-intense-fg ansi-bold">,</span> min_line_length<span class="ansi-yellow-intense-fg ansi-bold">,</span> max_line_gap<span class="ansi-yellow-intense-fg ansi-bold">)</span>
-<span class="ansi-green-fg">     40</span> 
-<span class="ansi-green-fg">     41</span>     <span class="ansi-red-intense-fg ansi-bold"># mask the lines again</span>
-
-<span class="ansi-green-intense-fg ansi-bold">&lt;ipython-input-3-f3ea9fe4e39c&gt;</span> in <span class="ansi-cyan-fg">hough_lines</span><span class="ansi-blue-intense-fg ansi-bold">(img, rho, theta, threshold, min_line_len, max_line_gap)</span>
-<span class="ansi-green-fg">    130</span>     lines <span class="ansi-yellow-intense-fg ansi-bold">=</span> cv2<span class="ansi-yellow-intense-fg ansi-bold">.</span>HoughLinesP<span class="ansi-yellow-intense-fg ansi-bold">(</span>img<span class="ansi-yellow-intense-fg ansi-bold">,</span> rho<span class="ansi-yellow-intense-fg ansi-bold">,</span> theta<span class="ansi-yellow-intense-fg ansi-bold">,</span> threshold<span class="ansi-yellow-intense-fg ansi-bold">,</span> np<span class="ansi-yellow-intense-fg ansi-bold">.</span>array<span class="ansi-yellow-intense-fg ansi-bold">(</span><span class="ansi-yellow-intense-fg ansi-bold">[</span><span class="ansi-yellow-intense-fg ansi-bold">]</span><span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">,</span> minLineLength<span class="ansi-yellow-intense-fg ansi-bold">=</span>min_line_len<span class="ansi-yellow-intense-fg ansi-bold">,</span> maxLineGap<span class="ansi-yellow-intense-fg ansi-bold">=</span>max_line_gap<span class="ansi-yellow-intense-fg ansi-bold">)</span>
-<span class="ansi-green-fg">    131</span>     line_img <span class="ansi-yellow-intense-fg ansi-bold">=</span> np<span class="ansi-yellow-intense-fg ansi-bold">.</span>zeros<span class="ansi-yellow-intense-fg ansi-bold">(</span><span class="ansi-yellow-intense-fg ansi-bold">(</span>img<span class="ansi-yellow-intense-fg ansi-bold">.</span>shape<span class="ansi-yellow-intense-fg ansi-bold">[</span><span class="ansi-cyan-intense-fg ansi-bold">0</span><span class="ansi-yellow-intense-fg ansi-bold">]</span><span class="ansi-yellow-intense-fg ansi-bold">,</span> img<span class="ansi-yellow-intense-fg ansi-bold">.</span>shape<span class="ansi-yellow-intense-fg ansi-bold">[</span><span class="ansi-cyan-intense-fg ansi-bold">1</span><span class="ansi-yellow-intense-fg ansi-bold">]</span><span class="ansi-yellow-intense-fg ansi-bold">,</span> <span class="ansi-cyan-intense-fg ansi-bold">3</span><span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">,</span> dtype<span class="ansi-yellow-intense-fg ansi-bold">=</span>np<span class="ansi-yellow-intense-fg ansi-bold">.</span>uint8<span class="ansi-yellow-intense-fg ansi-bold">)</span>
-<span class="ansi-green-intense-fg ansi-bold">--&gt; 132</span><span class="ansi-yellow-intense-fg ansi-bold">     </span>draw_lines<span class="ansi-yellow-intense-fg ansi-bold">(</span>line_img<span class="ansi-yellow-intense-fg ansi-bold">,</span> lines<span class="ansi-yellow-intense-fg ansi-bold">)</span>
-<span class="ansi-green-fg">    133</span>     <span class="ansi-green-intense-fg ansi-bold">return</span> line_img
-<span class="ansi-green-fg">    134</span> 
-
-<span class="ansi-green-intense-fg ansi-bold">&lt;ipython-input-3-f3ea9fe4e39c&gt;</span> in <span class="ansi-cyan-fg">draw_lines</span><span class="ansi-blue-intense-fg ansi-bold">(img, lines, color, thickness)</span>
-<span class="ansi-green-fg">     84</span>     left_lane_x_q25 <span class="ansi-yellow-intense-fg ansi-bold">=</span> np<span class="ansi-yellow-intense-fg ansi-bold">.</span>percentile<span class="ansi-yellow-intense-fg ansi-bold">(</span>left_lane_points<span class="ansi-yellow-intense-fg ansi-bold">[</span><span class="ansi-yellow-intense-fg ansi-bold">:</span><span class="ansi-yellow-intense-fg ansi-bold">]</span><span class="ansi-yellow-intense-fg ansi-bold">[</span><span class="ansi-cyan-intense-fg ansi-bold">0</span><span class="ansi-yellow-intense-fg ansi-bold">]</span><span class="ansi-yellow-intense-fg ansi-bold">,</span><span class="ansi-cyan-intense-fg ansi-bold">25</span><span class="ansi-yellow-intense-fg ansi-bold">)</span>
-<span class="ansi-green-fg">     85</span>     left_lane_x_iqr <span class="ansi-yellow-intense-fg ansi-bold">=</span> left_lane_x_q75 <span class="ansi-yellow-intense-fg ansi-bold">-</span> left_lane_x_q25
-<span class="ansi-green-intense-fg ansi-bold">---&gt; 86</span><span class="ansi-yellow-intense-fg ansi-bold">     </span>right_lane_x_q75 <span class="ansi-yellow-intense-fg ansi-bold">=</span> np<span class="ansi-yellow-intense-fg ansi-bold">.</span>percentile<span class="ansi-yellow-intense-fg ansi-bold">(</span>right_lane_points<span class="ansi-yellow-intense-fg ansi-bold">[</span><span class="ansi-yellow-intense-fg ansi-bold">:</span><span class="ansi-yellow-intense-fg ansi-bold">]</span><span class="ansi-yellow-intense-fg ansi-bold">[</span><span class="ansi-cyan-intense-fg ansi-bold">0</span><span class="ansi-yellow-intense-fg ansi-bold">]</span><span class="ansi-yellow-intense-fg ansi-bold">,</span><span class="ansi-cyan-intense-fg ansi-bold">75</span><span class="ansi-yellow-intense-fg ansi-bold">)</span>
-<span class="ansi-green-fg">     87</span>     right_lane_x_q25 <span class="ansi-yellow-intense-fg ansi-bold">=</span> np<span class="ansi-yellow-intense-fg ansi-bold">.</span>percentile<span class="ansi-yellow-intense-fg ansi-bold">(</span>right_lane_points<span class="ansi-yellow-intense-fg ansi-bold">[</span><span class="ansi-yellow-intense-fg ansi-bold">:</span><span class="ansi-yellow-intense-fg ansi-bold">]</span><span class="ansi-yellow-intense-fg ansi-bold">[</span><span class="ansi-cyan-intense-fg ansi-bold">0</span><span class="ansi-yellow-intense-fg ansi-bold">]</span><span class="ansi-yellow-intense-fg ansi-bold">,</span><span class="ansi-cyan-intense-fg ansi-bold">25</span><span class="ansi-yellow-intense-fg ansi-bold">)</span>
-<span class="ansi-green-fg">     88</span>     right_lane_x_iqr <span class="ansi-yellow-intense-fg ansi-bold">=</span> right_lane_x_q75 <span class="ansi-yellow-intense-fg ansi-bold">-</span> right_lane_x_q25
-
-<span class="ansi-red-intense-fg ansi-bold">IndexError</span>: list index out of range</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">HTML</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">&lt;video width=&quot;960&quot; height=&quot;540&quot; controls&gt;</span>
-<span class="s2">  &lt;source src=&quot;</span><span class="si">{0}</span><span class="s2">&quot;&gt;</span>
-<span class="s2">&lt;/video&gt;</span>
-<span class="s2">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">challenge_output</span><span class="p">))</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-<div class="prompt output_prompt">Out[14]:</div>
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-
-<video width="960" height="540" controls>
-  <source src="test_videos_output/challenge.mp4">
-</video>
-
-</div>
-
-</div>
-
-<div class="output_area">
-<div class="prompt"></div>
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre> 61%|████████████████████████████████████████████████▊                               | 153/251 [00:20&lt;00:12,  7.65it/s]</pre>
-</div>
-</div>
-
 </div>
 </div>
 
