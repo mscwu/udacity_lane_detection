@@ -17,6 +17,7 @@ The goals / steps of this project are the following:
 [image3]: ./test_images_output/test3.jpg "Edges"
 [image4]: ./test_images_output/test4.jpg "Mask_Edges"
 [image5]: ./test_images_output/test5.jpg "Lines"
+
 ---
 
 ### Reflection
@@ -39,6 +40,7 @@ My pipeline consisted of 5 steps.
 
 * Detect Lines Using Hough Transform
 ![alt text][image5]
+
 Here I am going to explain the changes I made to the drawing function.
 The first step in the drawing function is to eliminate horizontal lines. A threshold is chosen and any lines that have a slope less than the threshold is treated as "horizontal" and discarded. In my implementation, the threshold is 0.4.
 Next, lines are categorized as "left" or "right" based on their slopes. Positive sloped lines belong to the right lane and negative sloped lines belong to the left lane.
